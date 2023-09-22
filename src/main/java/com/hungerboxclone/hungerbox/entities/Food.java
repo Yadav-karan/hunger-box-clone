@@ -20,9 +20,6 @@ public class Food {
 	private String foodName;
 	private String foodDescription;
 	private double foodPrice;
-	@ManyToOne
-	@JoinColumn(name="cart_id")
-	private Cart cart;
 	@ManyToMany
 	@JoinTable(name="order_food",
 			joinColumns = { @JoinColumn(name="food_id")},
