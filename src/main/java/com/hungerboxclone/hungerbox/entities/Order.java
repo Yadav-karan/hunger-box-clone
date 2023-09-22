@@ -21,6 +21,7 @@ public class Order {
 	private int orderId;
 	private double totalPrice;
 	private String orderDate;
+	private String status;
 	@ManyToOne
 	@JsonBackReference
 	private Customer customer;
@@ -55,4 +56,17 @@ public class Order {
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public List<Food> getFoodItems() {
+		return foodItems;
+	}
+	public void setFoodItems(List<Food> foodItems) {
+		this.foodItems = foodItems;
+	}
+	
 }
