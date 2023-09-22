@@ -7,33 +7,28 @@ import com.hungerboxclone.hungerbox.entities.Food;
 public class CartDto {
 
 	@JsonProperty("food_id")
-	private Food foodItems;
+	private int foodItem;
 	@JsonProperty("customer_id")
-	private Customer customer;
+	private int customer;
 
 	public CartDto() {
 		
 	}
-	public CartDto(Food foodItems, Customer customer) {
-		super();
-		this.foodItems = foodItems;
-		this.customer = customer;
+
+	public int getFoodItem() {
+		return foodItem;
 	}
-	public Food getFoodItems() {
-		return foodItems;
+
+	public void setFoodItem(int foodItem) {
+		this.foodItem = foodItem;
 	}
-	public void setFoodItems(Food foodItems) {
-		this.foodItems = foodItems;
-	}
-	public Customer getCustomer() {
+
+	public int getCustomer() {
 		return customer;
 	}
-	public void setCustomer(Customer customer) {
+
+	public void setCustomer(int customer) {
 		this.customer = customer;
-	}
-	@Override
-	public String toString() {
-		return "CartDto [foodItems=" + foodItems + ", customer=" + customer + "]";
 	}
 	
 }

@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Food {
@@ -20,6 +21,8 @@ public class Food {
 	private String foodName;
 	private String foodDescription;
 	private double foodPrice;
+	@OneToOne(mappedBy = "food")
+	private FoodItem foodItem;
 	@ManyToMany
 	@JoinTable(name="order_food",
 			joinColumns = { @JoinColumn(name="food_id")},

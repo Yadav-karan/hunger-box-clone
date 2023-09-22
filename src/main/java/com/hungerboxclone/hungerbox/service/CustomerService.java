@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.hungerboxclone.hungerbox.dto.CustomerDto;
 import com.hungerboxclone.hungerbox.entities.Customer;
+import com.hungerboxclone.hungerbox.exception.NoSuchCustomerException;
 
 public interface CustomerService {
 
@@ -13,9 +14,9 @@ public interface CustomerService {
 	Customer addCustomer(CustomerDto customerDto);
 	
 	/**
-	 * will delete customer from database
+	 * will delete customer from database accepts id as parameter throws NoSuchCustomerException if data not found
 	 */
-	boolean deleteCustomer(int customerId);
+	boolean deleteCustomer(int customerId)throws NoSuchCustomerException;
 	
 	/**
 	 * will update customer in database
@@ -27,4 +28,8 @@ public interface CustomerService {
 	 */
 	List<Customer> getAllCustomer();
 	
+	/**
+	 * will fetch customer from database by accepting id in parameter throws NoSuchCustomerException when customer is not present
+	 */
+	Customer findCustomerById(int customerId) throws NoSuchCustomerException;
 }

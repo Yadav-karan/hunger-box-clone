@@ -17,7 +17,7 @@ public class Cart {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int cartId;
 	@OneToMany
-	private List<Food> foodItems;
+	private List<FoodItem> foodItems;
 	@OneToOne(mappedBy = "cart")
 	@JoinColumn(name="customer_id")
 	private Customer customer;
@@ -25,7 +25,7 @@ public class Cart {
 		
 	}
 
-	public Cart(int cartId, List<Food> foodItems) {
+	public Cart(int cartId, List<FoodItem> foodItems) {
 		super();
 		this.cartId = cartId;
 		this.foodItems = foodItems;
@@ -39,11 +39,11 @@ public class Cart {
 		this.cartId = cartId;
 	}
 
-	public List<Food> getFoodItems() {
+	public List<FoodItem> getFoodItems() {
 		return foodItems;
 	}
 
-	public void setFoodItems(List<Food> foodItems) {
+	public void setFoodItems(List<FoodItem> foodItems) {
 		this.foodItems = foodItems;
 	}
 
