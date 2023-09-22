@@ -31,9 +31,10 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public boolean deleteCustomer(int customerId) throws NoSuchCustomerException{
-		Customer customer = findCustomerById(customerId);
+		CustomerDto customer = findCustomerById(customerId);
 		if(customer != null) {
 			customerRepo.deleteById(customerId);
+			customerPassRepo.delete(customerPassRepo.findByUsername(customer.getUsername()));
 			return true;
 		}else {
 			return false;
@@ -41,22 +42,26 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public Customer updateCustomer(CustomerDto customerDto) {
-		// TODO Auto-generated method stub
-		return null;
+	public CustomerDto updateCustomer(CustomerDto customerDto) throws NoSuchCustomerException {
+		CustomerDto customer = findCustomerById(customerDto.getCustomerId());
+		if(customer != null) {
+			Customer result = customerRepo.save(Utils.parseCustomerDtoToCustomer(customerDto));
+			return Utils.parseCustomerToCustomerDto(result);
+		}else {
+			return null;
+		}
 	}
 
 	@Override
-	public List<Customer> getAllCustomer() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<CustomerDto> getAllCustomer() {
+		return Utils.parseListofCustomerToCustomerDto(customerRepo.findAll());
 	}
 
 	@Override
-	public Customer findCustomerById(int customerId) throws NoSuchCustomerException {
+	public CustomerDto findCustomerById(int customerId) throws NoSuchCustomerException {
 		Customer customer = customerRepo.findById(customerId).
 				orElseThrow(()-> new NoSuchCustomerException("Customer with id: "+customerId+" not present!!!!"));
-		return customer;
+		return Utils.parseCustomerToCustomerDto(customer);
 	}
 
 }

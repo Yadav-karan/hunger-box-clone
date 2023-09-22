@@ -8,4 +8,5 @@ import com.hungerboxclone.hungerbox.entities.CustomerPass;
 @Repository
 public interface CustomerPassRepo extends JpaRepository<CustomerPass, String> {
 
+	CustomerPass findByUsername(String username);
 }

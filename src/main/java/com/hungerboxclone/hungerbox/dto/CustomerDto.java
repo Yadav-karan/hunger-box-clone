@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class CustomerDto {
 
+	@JsonProperty("customer_id")
+	private int customerId;
 	@JsonProperty("first_name")
 	private String firstName;
 	@JsonProperty("last_name")
@@ -16,6 +18,13 @@ public class CustomerDto {
 	private String contactNumber;
 	@JsonProperty("password")
 	private String password;
+
+	public int getCustomerId() {
+		return customerId;
+	}
+	public void setCustomerId(int customerId) {
+		this.customerId = customerId;
+	}
 	public String getFirstName() {
 		return firstName;
 	}
@@ -54,8 +63,8 @@ public class CustomerDto {
 	}
 	@Override
 	public String toString() {
-		return "CustomerDto [firstName=" + firstName + ", lastName=" + lastName + ", username=" + username + ", email="
-				+ email + ", contactNumber=" + contactNumber + ", password=" + password + "]";
+		return "CustomerDto [customerId=" + customerId + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", username=" + username + ", email=" + email + ", contactNumber=" + contactNumber + ", password="
+				+ password + "]";
 	}
-	
 }

@@ -3,6 +3,9 @@ package com.hungerboxclone.hungerbox.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class FoodDto {
+	
+	@JsonProperty("food_id")
+	private int foodId;
 	@JsonProperty("food_name")
 	private String foodName;
 	@JsonProperty("food_desc")
@@ -10,6 +13,12 @@ public class FoodDto {
 	@JsonProperty("food_price")
 	private double foodPrice;
 	
+	public int getFoodId() {
+		return foodId;
+	}
+	public void setFoodId(int foodId) {
+		this.foodId = foodId;
+	}
 	public String getFoodName() {
 		return foodName;
 	}

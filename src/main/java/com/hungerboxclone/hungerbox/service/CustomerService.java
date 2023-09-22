@@ -21,15 +21,15 @@ public interface CustomerService {
 	/**
 	 * will update customer in database
 	 */
-	Customer updateCustomer(CustomerDto customerDto);
+	CustomerDto updateCustomer(CustomerDto customerDto);
 	
 	/**
 	 * will fetch all the customer from database
 	 */
-	List<Customer> getAllCustomer();
+	List<CustomerDto> getAllCustomer();
 	
 	/**
 	 * will fetch customer from database by accepting id in parameter throws NoSuchCustomerException when customer is not present
 	 */
-	Customer findCustomerById(int customerId) throws NoSuchCustomerException;
+	CustomerDto findCustomerById(int customerId) throws NoSuchCustomerException;
 }
