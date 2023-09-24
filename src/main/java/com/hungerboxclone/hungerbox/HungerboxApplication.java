@@ -22,5 +22,5 @@ public class HungerboxApplication {
 		return new Docket(DocumentationType.SWAGGER_2).select()
 				.apis(RequestHandlerSelectors.basePackage("com.hungerboxclone.hungerbox")).build();
 	}
-
+	//http://localhost:9090/swagger-ui.html#/
 }

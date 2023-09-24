@@ -29,7 +29,7 @@ public interface CartService {
 	/**
 	 * will add items to cart will accept CartDto as parameter
 	 */
-	Cart addToCart(CartDto cartDto);
+	String addToCart(CartDto cartDto);
 	
 	/**
 	 * will fetch all the carts present in database

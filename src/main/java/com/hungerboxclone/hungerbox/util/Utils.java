@@ -45,8 +45,25 @@ public class Utils {
 		Food food = new Food();
 		food.setFoodId(foodDto.getFoodId());
 		food.setFoodName(foodDto.getFoodName());
-		food.setFoodDescription(food.getFoodDescription());
+		food.setFoodDescription(foodDto.getFoodDescription());
 		food.setFoodPrice(foodDto.getFoodPrice());
 		return food;
+	}
+	
+	public static FoodDto parseFoodToFoodDto(Food food) {
+		FoodDto foodDto = new FoodDto();
+		foodDto.setFoodId(food.getFoodId());
+		foodDto.setFoodName(food.getFoodName());
+		foodDto.setFoodDescription(food.getFoodDescription());
+		foodDto.setFoodPrice(food.getFoodPrice());
+		return foodDto;
+	}
+	
+	public static List<FoodDto> parseListOfFoodToListOfFoodDto(List<Food> foods){
+		List<FoodDto> foodDtos = new ArrayList<>();
+		foods.stream().forEach(f->{
+			foodDtos.add(parseFoodToFoodDto(f));
+		});
+		return foodDtos;
 	}
 }

@@ -23,6 +23,11 @@ public class FoodItem {
 		this.quantity = quantity;
 		this.food = food;
 	}
+	
+	public FoodItem(int quantity, Food food) {
+		this.quantity = quantity;
+		this.food = food;
+	}
 
 	public int getFoodItemId() {
 		return FoodItemId;
