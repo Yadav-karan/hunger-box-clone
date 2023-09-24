@@ -4,6 +4,9 @@ import java.util.List;
 
 import com.hungerboxclone.hungerbox.dto.CartDto;
 import com.hungerboxclone.hungerbox.entities.Cart;
+import com.hungerboxclone.hungerbox.exception.NoSuchCartException;
+import com.hungerboxclone.hungerbox.exception.NoSuchCustomerException;
+import com.hungerboxclone.hungerbox.exception.NoSuchFoodException;
 
 /**
  * @author karanyad
@@ -29,10 +32,15 @@ public interface CartService {
 	/**
 	 * will add items to cart will accept CartDto as parameter
 	 */
-	String addToCart(CartDto cartDto);
+	String addToCart(CartDto cartDto) throws NoSuchFoodException,NoSuchCustomerException;
 	
 	/**
 	 * will fetch all the carts present in database
 	 */
 	List<Cart> getAllCarts();
+	
+	/**
+	 * will fetch the cart present in database accepts cart id as parameter
+	 */
+	Cart getCartById(int cartId) throws NoSuchCartException; 
 }

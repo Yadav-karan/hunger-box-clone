@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.hungerboxclone.hungerbox.dto.CartDto;
 import com.hungerboxclone.hungerbox.entities.Cart;
 import com.hungerboxclone.hungerbox.entities.Customer;
 import com.hungerboxclone.hungerbox.entities.Food;
 import com.hungerboxclone.hungerbox.entities.FoodItem;
+import com.hungerboxclone.hungerbox.exception.NoSuchCartException;
 import com.hungerboxclone.hungerbox.exception.NoSuchCustomerException;
 import com.hungerboxclone.hungerbox.exception.NoSuchFoodException;
 import com.hungerboxclone.hungerbox.repo.CartRepo;
@@ -17,6 +19,7 @@ import com.hungerboxclone.hungerbox.repo.CustomerRepo;
 import com.hungerboxclone.hungerbox.repo.FoodItemRepo;
 import com.hungerboxclone.hungerbox.repo.FoodRepo;
 
+@Service
 public class CartServiceImpl implements CartService {
 	
 	@Autowired
@@ -49,13 +52,14 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	public String addToCart(CartDto cartDto) {
+	public String addToCart(CartDto cartDto) throws NoSuchFoodException,NoSuchCustomerException{
 		// Finding food from the DB
 		Food food = foodRepo.findById(cartDto.getFoodId()).
 				orElseThrow(()-> new NoSuchFoodException("Food with food id: "+cartDto.getFoodId()+" not found"));
 		
-		// Creating object of FoodItem to set in cart
+		// Creating object of FoodItem to set in cart and saving it
 		FoodItem foodItem = new FoodItem(cartDto.getQuantity(), food);
+		foodItemRepo.save(foodItem);
 		
 		//Creating object of customer to set in cart
 		Customer customer = customerRepo.findById(cartDto.getCustomerId())
@@ -96,8 +100,13 @@ public class CartServiceImpl implements CartService {
 
 	@Override
 	public List<Cart> getAllCarts() {
-		// TODO Auto-generated method stub
-		return null;
+		return cartRepo.findAll();
+	}
+
+	@Override
+	public Cart getCartById(int cartId) throws NoSuchCartException {
+		Cart cart = cartRepo.findById(cartId).orElseThrow(()-> new NoSuchCartException("Cart with cart id"+ cartId+" not present"));
+		return cart;
 	}
 
 }

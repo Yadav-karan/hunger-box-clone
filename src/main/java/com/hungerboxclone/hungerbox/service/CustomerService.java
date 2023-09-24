@@ -3,7 +3,9 @@ package com.hungerboxclone.hungerbox.service;
 import java.util.List;
 
 import com.hungerboxclone.hungerbox.dto.CustomerDto;
+import com.hungerboxclone.hungerbox.entities.Cart;
 import com.hungerboxclone.hungerbox.entities.Customer;
+import com.hungerboxclone.hungerbox.exception.NoSuchCartException;
 import com.hungerboxclone.hungerbox.exception.NoSuchCustomerException;
 
 public interface CustomerService {
@@ -32,4 +34,6 @@ public interface CustomerService {
 	 * will fetch customer from database by accepting id in parameter throws NoSuchCustomerException when customer is not present
 	 */
 	CustomerDto findCustomerById(int customerId) throws NoSuchCustomerException;
+	
+	Cart findCartByCustomerId(int customerId) throws NoSuchCartException;
 }

@@ -30,13 +30,13 @@ public class CustomerController {
 		return new ResponseEntity<>(customer, HttpStatus.CREATED);
 	}
 
-	@GetMapping("/get-customer-by-id/{customerId}")
+	@GetMapping("/get-customer-by-id")
 	public ResponseEntity<?> getCustomerById(@RequestParam int customerId) throws NoSuchCustomerException {
 		CustomerDto customerDto = customerService.findCustomerById(customerId);
 		return new ResponseEntity<>(customerDto, HttpStatus.OK);
 	}
 
-	@DeleteMapping("/delete-customer/{customerId}")
+	@DeleteMapping("/delete-customer")
 	public ResponseEntity<?> deleteCustomerById(@RequestParam int customerId) throws NoSuchCustomerException {
 		return new ResponseEntity<>(customerService.deleteCustomer(customerId), HttpStatus.OK);
 	}
@@ -49,5 +49,10 @@ public class CustomerController {
 	@PutMapping("/update-customer")
 	public ResponseEntity<?> updateCustomer(@RequestBody CustomerDto customerDto){
 		return new ResponseEntity<>(customerService.updateCustomer(customerDto),HttpStatus.OK);
+	}
+	
+	@GetMapping("/find-customer-cart")
+	public ResponseEntity<?> findCustomersCart(@RequestParam int customerId){
+		return new ResponseEntity<>(customerService.findCartByCustomerId(customerId),HttpStatus.OK);
 	}
 }

@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Cart {
 
@@ -20,6 +22,7 @@ public class Cart {
 	private List<FoodItem> foodItems;
 	@OneToOne(mappedBy = "cart")
 	@JoinColumn(name="customer_id")
+	@JsonBackReference
 	private Customer customer;
 	public Cart() {
 		

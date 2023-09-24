@@ -32,6 +32,7 @@ public class Customer {
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="cart_id", referencedColumnName = "cartId")
+	@JsonManagedReference
 	private Cart cart;
 
 	public Customer() {
