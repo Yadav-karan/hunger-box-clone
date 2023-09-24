@@ -27,7 +27,7 @@ public interface CartService {
 	/**
 	 * will remove all the existing items from cart
 	 */
-	Cart removeAllItemsFromCart();
+	Cart removeAllItemsFromCart(int cartId)throws NoSuchCartException;
 	
 	/**
 	 * will add items to cart will accept CartDto as parameter

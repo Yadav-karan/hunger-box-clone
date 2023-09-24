@@ -3,6 +3,7 @@ package com.hungerboxclone.hungerbox.entities;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,6 +12,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Food {
@@ -21,8 +24,6 @@ public class Food {
 	private String foodName;
 	private String foodDescription;
 	private double foodPrice;
-	@OneToOne(mappedBy = "food")
-	private FoodItem foodItem;
 	@ManyToMany
 	@JoinTable(name="order_food",
 			joinColumns = { @JoinColumn(name="food_id")},

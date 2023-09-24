@@ -2,6 +2,7 @@ package com.hungerboxclone.hungerbox.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,15 +41,31 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	public Cart removeItemFromCart(int foodId, int cartId) {
-		// TODO Auto-generated method stub
-		return null;
+	public Cart removeItemFromCart(int foodId, int cartId) throws NoSuchCartException{
+		// Fetching cart by the given id
+		Cart cart = getCartById(cartId);
+		
+		//Fetching food items from the cart
+		List<FoodItem> foodItems = cart.getFoodItems();
+		
+		// Collecting the fooditem inside a list and removing the concerned fooditem from the fooditems list
+		List<FoodItem> list = foodItems.stream().
+				filter(f-> f.getFood().getFoodId() == foodId).
+				collect(Collectors.toList());
+		foodItems.removeAll(list);
+		foodItemRepo.saveAll(foodItems);
+		cart.setFoodItems(null);
+		cart.setFoodItems(foodItems);
+		cartRepo.save(cart);
+		return cart;
 	}
 
 	@Override
-	public Cart removeAllItemsFromCart() {
-		// TODO Auto-generated method stub
-		return null;
+	public Cart removeAllItemsFromCart(int cartId) throws NoSuchCartException{
+		Cart cart = getCartById(cartId);
+		cart.setFoodItems(null);
+		cartRepo.save(cart);
+		return cart;
 	}
 
 	@Override
@@ -56,7 +73,7 @@ public class CartServiceImpl implements CartService {
 		// Finding food from the DB
 		Food food = foodRepo.findById(cartDto.getFoodId()).
 				orElseThrow(()-> new NoSuchFoodException("Food with food id: "+cartDto.getFoodId()+" not found"));
-		
+
 		// Creating object of FoodItem to set in cart and saving it
 		FoodItem foodItem = new FoodItem(cartDto.getQuantity(), food);
 		foodItemRepo.save(foodItem);

@@ -1,17 +1,20 @@
 package com.hungerboxclone.hungerbox.entities;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 public class FoodItem {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int FoodItemId;
+	private int foodItemId;
 	private int quantity;
 	@OneToOne
 	private Food food;
@@ -22,7 +25,7 @@ public class FoodItem {
 
 	public FoodItem(int foodItemId, int quantity, Food food) {
 		super();
-		FoodItemId = foodItemId;
+		this.foodItemId = foodItemId;
 		this.quantity = quantity;
 		this.food = food;
 	}
@@ -33,10 +36,10 @@ public class FoodItem {
 	}
 
 	public int getFoodItemId() {
-		return FoodItemId;
+		return foodItemId;
 	}
 	public void setFoodItemId(int foodItemId) {
-		FoodItemId = foodItemId;
+		this.foodItemId = foodItemId;
 	}
 	public Food getFood() {
 		return food;
@@ -53,7 +56,7 @@ public class FoodItem {
 
 	@Override
 	public String toString() {
-		return "FoodItem [FoodItemId=" + FoodItemId + ", quantity=" + quantity + ", food=" + food + "]";
+		return "FoodItem [FoodItemId=" + foodItemId + ", quantity=" + quantity + ", food=" + food + "]";
 	}
 	
 }

@@ -3,6 +3,7 @@ package com.hungerboxclone.hungerbox.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,5 +35,15 @@ public class CartController {
 	@GetMapping("/get-all")
 	public ResponseEntity<?> getAllCart(){
 		return new ResponseEntity<>(cartService.getAllCarts(),HttpStatus.OK);
+	}
+	
+	@DeleteMapping("/remove-all-items")
+	public ResponseEntity<?> removeAllItemsFromCart(@RequestParam int cartId) throws NoSuchCartException{
+		return new ResponseEntity<>(cartService.removeAllItemsFromCart(cartId),HttpStatus.OK);
+	}
+	
+	@DeleteMapping("/remove-item")
+	public ResponseEntity<?> removeItemFromCart(@RequestParam int foodId,@RequestParam int cartId){
+		return new ResponseEntity<>(cartService.removeItemFromCart(foodId, cartId),HttpStatus.OK);
 	}
 }
