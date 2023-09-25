@@ -1,5 +1,7 @@
 package com.hungerboxclone.hungerbox.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hungerboxclone.hungerbox.dto.CustomerDto;
-import com.hungerboxclone.hungerbox.entities.Customer;
+import com.hungerboxclone.hungerbox.entities.Order;
 import com.hungerboxclone.hungerbox.exception.NoSuchCustomerException;
 import com.hungerboxclone.hungerbox.service.CustomerService;
 
@@ -26,8 +28,8 @@ public class CustomerController {
 
 	@PostMapping("/register-customer")
 	public ResponseEntity<?> registerCustomer(@RequestBody CustomerDto customerDto) {
-		Customer customer = customerService.addCustomer(customerDto);
-		return new ResponseEntity<>(customer, HttpStatus.CREATED);
+		CustomerDto result = customerService.addCustomer(customerDto);
+		return new ResponseEntity<>(result, HttpStatus.CREATED);
 	}
 
 	@GetMapping("/get-customer-by-id")
@@ -40,19 +42,26 @@ public class CustomerController {
 	public ResponseEntity<?> deleteCustomerById(@RequestParam int customerId) throws NoSuchCustomerException {
 		return new ResponseEntity<>(customerService.deleteCustomer(customerId), HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/customers")
-	public ResponseEntity<?> getAllCustomers(){
-		return new ResponseEntity<>(customerService.getAllCustomer(),HttpStatus.OK);
+	public ResponseEntity<?> getAllCustomers() {
+		return new ResponseEntity<>(customerService.getAllCustomer(), HttpStatus.OK);
 	}
-	
+
 	@PutMapping("/update-customer")
-	public ResponseEntity<?> updateCustomer(@RequestBody CustomerDto customerDto){
-		return new ResponseEntity<>(customerService.updateCustomer(customerDto),HttpStatus.OK);
+	public ResponseEntity<?> updateCustomer(@RequestBody CustomerDto customerDto) {
+		return new ResponseEntity<>(customerService.updateCustomer(customerDto), HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/find-customer-cart")
-	public ResponseEntity<?> findCustomersCart(@RequestParam int customerId){
-		return new ResponseEntity<>(customerService.findCartByCustomerId(customerId),HttpStatus.OK);
+	public ResponseEntity<?> findCustomersCart(@RequestParam int customerId) {
+		return new ResponseEntity<>(customerService.findCartByCustomerId(customerId), HttpStatus.OK);
+	}
+
+	@GetMapping("/find-customers-orders")
+	public ResponseEntity<?> findCustomersOrders(@RequestParam int customerId) {
+		List<Order> result = customerService.findOrdersByCustomerId(customerId);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+
 	}
 }

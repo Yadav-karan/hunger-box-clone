@@ -76,6 +76,7 @@ public class CartServiceImpl implements CartService {
 
 		// Creating object of FoodItem to set in cart and saving it
 		FoodItem foodItem = new FoodItem(cartDto.getQuantity(), food);
+		foodItem.setPrice(foodItem.getQuantity() * food.getFoodPrice());
 		foodItemRepo.save(foodItem);
 		
 		//Creating object of customer to set in cart

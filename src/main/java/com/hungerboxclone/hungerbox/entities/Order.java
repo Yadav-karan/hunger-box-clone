@@ -25,8 +25,8 @@ public class Order {
 	@ManyToOne
 	@JsonBackReference
 	private Customer customer;
-	@ManyToMany(mappedBy = "orders")
-	private List<Food> foodItems;
+	@ManyToMany
+	private List<FoodItem> foodItems;
 	
 	public Order() {
 		
@@ -62,11 +62,17 @@ public class Order {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public List<Food> getFoodItems() {
+	public List<FoodItem> getFoodItems() {
 		return foodItems;
 	}
-	public void setFoodItems(List<Food> foodItems) {
+	public void setFoodItems(List<FoodItem> foodItems) {
 		this.foodItems = foodItems;
+	}
+
+	@Override
+	public String toString() {
+		return "Order [orderId=" + orderId + ", totalPrice=" + totalPrice + ", orderDate=" + orderDate + ", status="
+				+ status + ", customer=" + customer + ", foodItems=" + foodItems + "]";
 	}
 	
 }

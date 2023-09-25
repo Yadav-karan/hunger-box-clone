@@ -9,11 +9,13 @@ import com.hungerboxclone.hungerbox.dto.CustomerDto;
 import com.hungerboxclone.hungerbox.entities.Cart;
 import com.hungerboxclone.hungerbox.entities.Customer;
 import com.hungerboxclone.hungerbox.entities.CustomerPass;
+import com.hungerboxclone.hungerbox.entities.Order;
 import com.hungerboxclone.hungerbox.exception.NoSuchCartException;
 import com.hungerboxclone.hungerbox.exception.NoSuchCustomerException;
 import com.hungerboxclone.hungerbox.repo.CartRepo;
 import com.hungerboxclone.hungerbox.repo.CustomerPassRepo;
 import com.hungerboxclone.hungerbox.repo.CustomerRepo;
+import com.hungerboxclone.hungerbox.repo.OrderRepo;
 import com.hungerboxclone.hungerbox.util.Utils;
 
 @Service
@@ -21,26 +23,30 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Autowired
 	private CustomerRepo customerRepo;
-	
+
 	@Autowired
 	private CustomerPassRepo customerPassRepo;
-	
+
 	@Autowired
 	private CartRepo cartRepo;
 	
+	@Autowired
+	private OrderRepo orderRepo;
+
 	@Override
-	public Customer addCustomer(CustomerDto customerDto) {
+	public CustomerDto addCustomer(CustomerDto customerDto) {
 		CustomerPass custPass = new CustomerPass(customerDto.getUsername(), customerDto.getPassword());
 		customerPassRepo.save(custPass);
-		return customerRepo.save(Utils.parseCustomerDtoToCustomer(customerDto));
+		Customer customer = customerRepo.save(Utils.parseCustomerDtoToCustomer(customerDto));
+		return Utils.parseCustomerToCustomerDto(customer);
 	}
 
 	@Override
-	public boolean deleteCustomer(int customerId) throws NoSuchCustomerException{
+	public boolean deleteCustomer(int customerId) throws NoSuchCustomerException {
 		CustomerDto result = findCustomerById(customerId);
-		if(result != null) {
-			Customer customer = customerRepo.findById(customerId).
-					orElseThrow(()-> new NoSuchCustomerException("Customer with id: "+customerId+" not present!!!!"));
+		if (result != null) {
+			Customer customer = customerRepo.findById(customerId).orElseThrow(
+					() -> new NoSuchCustomerException("Customer with id: " + customerId + " not present!!!!"));
 			Cart cart = customer.getCart();
 			cart.setCustomer(null);
 			customer.setCart(null);
@@ -48,7 +54,7 @@ public class CustomerServiceImpl implements CustomerService {
 			customerRepo.deleteById(customerId);
 			customerPassRepo.delete(customerPassRepo.findByUsername(customer.getUsername()));
 			return true;
-		}else {
+		} else {
 			return false;
 		}
 	}
@@ -56,10 +62,10 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public CustomerDto updateCustomer(CustomerDto customerDto) throws NoSuchCustomerException {
 		CustomerDto customer = findCustomerById(customerDto.getCustomerId());
-		if(customer != null) {
+		if (customer != null) {
 			Customer result = customerRepo.save(Utils.parseCustomerDtoToCustomer(customerDto));
 			return Utils.parseCustomerToCustomerDto(result);
-		}else {
+		} else {
 			return null;
 		}
 	}
@@ -71,18 +77,27 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public CustomerDto findCustomerById(int customerId) throws NoSuchCustomerException {
-		Customer customer = customerRepo.findById(customerId).
-				orElseThrow(()-> new NoSuchCustomerException("Customer with id: "+customerId+" not present!!!!"));
+		Customer customer = customerRepo.findById(customerId)
+				.orElseThrow(() -> new NoSuchCustomerException("Customer with id: " + customerId + " not present!!!!"));
+		List<Order> orders = customer.getOrders(); 
+		for(Order o: orders) {
+			System.out.println(o);
+		}
 		return Utils.parseCustomerToCustomerDto(customer);
 	}
 
 	@Override
 	public Cart findCartByCustomerId(int customerId) throws NoSuchCartException {
 		Cart customersCart = cartRepo.getCustomersCart(customerId);
-		if(customersCart == null) {
-			throw new NoSuchCartException("Cart for customer id: "+customerId+ " not present!!!!");
+		if (customersCart == null) {
+			throw new NoSuchCartException("Cart for customer id: " + customerId + " not present!!!!");
 		}
 		return customersCart;
+	}
+
+	@Override
+	public List<Order> findOrdersByCustomerId(int customerId) {
+		return orderRepo.getCustomersOrders(customerId);
 	}
 
 }

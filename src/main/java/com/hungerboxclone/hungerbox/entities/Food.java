@@ -24,11 +24,7 @@ public class Food {
 	private String foodName;
 	private String foodDescription;
 	private double foodPrice;
-	@ManyToMany
-	@JoinTable(name="order_food",
-			joinColumns = { @JoinColumn(name="food_id")},
-			inverseJoinColumns = { @JoinColumn(name="order_id")})
-	private List<Order> orders; 
+	
 	
 	public Food() {
 		

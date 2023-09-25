@@ -1,5 +1,7 @@
 package com.hungerboxclone.hungerbox.util;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +12,8 @@ import com.hungerboxclone.hungerbox.entities.Food;
 
 public class Utils {
 
+	private static final String DATE_FORMAT = "dd-MM-yyyy";
+	
 	public static Customer parseCustomerDtoToCustomer(CustomerDto customerDto) {
 		Customer customer = new Customer();
 		customer.setCustomerId(customerDto.getCustomerId());
@@ -66,4 +70,9 @@ public class Utils {
 		});
 		return foodDtos;
 	}
+	
+	public static String parseToDateTimeToString(LocalDateTime date) {
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
+        return dateTimeFormatter.format(date);
+    }
 }
